@@ -7,6 +7,11 @@ const poppins = Poppins({
   subsets: ["latin"]
 });
 
+export const metadata: Metadata = {
+  title: "Donald's",
+  description: "Delicious and delicious food",
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
