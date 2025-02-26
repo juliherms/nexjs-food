@@ -6,6 +6,7 @@ import { MenuCategory, Prisma } from "@prisma/client";
 import { ClockIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
+import Products from "./products";
 
 interface RestaurantCategoriesProps {
     restaurant: Prisma.RestaurantGetPayload<{
@@ -17,11 +18,17 @@ interface RestaurantCategoriesProps {
     }>;
 }
 
+type MenuCategoriesWithProducts = Prisma.MenuCategoryGetPayload<{
+    include: {
+        products: true;
+    }
+}>;
+
 const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps ) => {
 
-    const [selectedCategory, setSelectedCategory] =useState<MenuCategory>(restaurant.menuCategory[0])
+    const [selectedCategory, setSelectedCategory] =useState<MenuCategoriesWithProducts>(restaurant.menuCategory[0])
 
-    const handleCategoryClick = (category: MenuCategory) => {
+    const handleCategoryClick = (category: MenuCategoriesWithProducts) => {
         setSelectedCategory(category);
     }
 
@@ -30,7 +37,7 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps ) => {
     }
 
     return (
-        <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl border bg-white">
+        <div className="relative z-50 mt-[-1.5rem] rounded-t-3xl bg-white">
             <div className="p-5">
                 <div className="flex items-center gap-3">
                     <Image 
@@ -65,6 +72,11 @@ const RestaurantCategories = ({ restaurant }: RestaurantCategoriesProps ) => {
                 </div>
                 <ScrollBar orientation="horizontal"/>
             </ScrollArea>
+
+            <h3 className="px-5 font-semibold pt-2 pb-3">{ selectedCategory.name }</h3>
+
+             {/** Lista os produtos de acordo com a categoria selecionada */}       
+            <Products products={selectedCategory.products} />
         </div>
     );
 }
