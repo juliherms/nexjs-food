@@ -1,9 +1,7 @@
-import { getReastaurantBySlug } from "@/lib/get-restaurant-by-slug";
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ChevronLeftIcon, ScrollTextIcon } from "lucide-react";
 import RestaurantHeader from "./components/header";
+import RestaurantCategories from "./components/categories";
+import { getCategoriesFromReastaurantBySlug } from "@/lib/get-categories-restaurant-by-slug";
 
 interface RestaurantMenuPageProps {
     // recebo como parametro o slug e a forma de consumo
@@ -24,7 +22,7 @@ const RestaurantMenuPage = async ({ params, searchParams }: RestaurantMenuPagePr
         return notFound();
     }
 
-    const restaurant = await getReastaurantBySlug(slug);
+    const restaurant = await getCategoriesFromReastaurantBySlug(slug);
     if(!restaurant) {
         return notFound();
     }
@@ -32,6 +30,7 @@ const RestaurantMenuPage = async ({ params, searchParams }: RestaurantMenuPagePr
     return (
         <div>
            <RestaurantHeader restaurant={restaurant} />
+           <RestaurantCategories restaurant={restaurant} />
         </div>
     )
 }
