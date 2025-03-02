@@ -7,7 +7,8 @@ export const getProductWithRestaurant = async (id: string) => {
             restaurant: {
                 select: {
                     name: true,
-                    avatarImageUrl: true
+                    avatarImageUrl: true,
+                    slug: true,
                 }
             }
          }
